@@ -1,5 +1,5 @@
 package main
-
+// Test comment
 import (
 	"bufio"
 	"fmt"
