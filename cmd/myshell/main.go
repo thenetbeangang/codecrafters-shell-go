@@ -13,6 +13,10 @@ func main() {
 	// Uncomment this block to pass the first stage
 	fmt.Fprint(os.Stdout, "$ ")
 
-	// Wait for user input
-	bufio.NewReader(os.Stdin).ReadString('\n')
+	
+	// Read a line of input from standard input (keyboard)
+	input, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+	
+	// Print the input (excluding the newline character) followed by ": command not found"
+	fmt.Fprint(os.Stdout, input[:len(input)-1]+": command not found\n")
 }
