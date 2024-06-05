@@ -31,8 +31,8 @@ func main() {
 		cmd = strings.TrimSpace(cmd) // clean the input
 
 		_, err := exec.LookPath(cmd) // shut the compiler up now
-		
-		if strings.TrimRight(command, "\n") == "exit 0" {
+
+		if strings.TrimRight(cmd, "\n") == "exit 0" {
 
 			os.Exit(0)
 
