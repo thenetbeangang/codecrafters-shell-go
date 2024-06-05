@@ -31,8 +31,15 @@ func main() {
 		cmd = strings.TrimSpace(cmd) // clean the input
 
 		_, err := exec.LookPath(cmd) // shut the compiler up now
+		
+		if strings.TrimRight(command, "\n") == "exit 0" {
 
+			os.Exit(0)
+
+		}
 		if err != nil {
 
 			fmt.Printf("%s: command not found\n", cmd)
-		}}}
+		}
+	}
+}
