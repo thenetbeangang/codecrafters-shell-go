@@ -8,7 +8,7 @@ import (
 
 	"os"
 
-	"os/exec"
+	"strconv"
 
 	"strings"
 
@@ -16,30 +16,56 @@ import (
 
 func main() {
 
-	// You can use print statements as follows for debugging, they'll be visible when running tests.
-
-	// fmt.Println("Logs from your program will appear here!")
-
-	reader := bufio.NewReader(os.Stdin)
-
 	for {
 
 		fmt.Fprint(os.Stdout, "$ ")
 
-		cmd, _ := reader.ReadString('\n')
+		// Wait for user input
 
-		cmd = strings.TrimSpace(cmd) // clean the input
+		cmd, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 
-		_, err := exec.LookPath(cmd) // shut the compiler up now
+		cmd = strings.Trim(cmd, "\n") // trim new lines
 
-		if strings.TrimRight(cmd, "\n") == "exit 0" {
+		handleCmd(cmd)
 
-			os.Exit(0)
-
-		}
-		if err != nil {
-
-			fmt.Printf("%s: command not found\n", cmd)
-		}
 	}
+
+}
+
+func handleCmd(cmd string) {
+
+	cmd, args := getCmdAndArgs(cmd)
+
+	switch cmd {
+
+	case "exit":
+
+		code, _ := strconv.Atoi(args[0])
+
+		os.Exit(code)
+
+	case "echo":
+
+		fmt.Fprintln(os.Stdout, strings.Join(args, " "))
+
+	default:
+
+		fmt.Fprintf(os.Stdout, "%s: command not found\n", cmd)
+
+	}
+
+}
+
+func getCmdAndArgs(cmd string) (string, []string) {
+
+	l := strings.Split(cmd, " ")
+
+	if len(l) < 2 {
+
+		return l[0], []string{}
+
+	}
+
+	return l[0], l[1:]
+
 }
